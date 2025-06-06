@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RIU • Videos de meditación</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  :root {
+    --color-bg: #ffffff;
+    --color-primary: #111827;
+    --color-secondary: #6b7280;
+    --color-accent: #2563eb;
+    --spacing: 1.5rem;
+    --border-radius: 0.75rem;
+    --shadow-light: rgba(0,0,0,0.05);
+    --shadow-medium: rgba(0,0,0,0.1);
+    --font-family: 'Poppins', sans-serif;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--color-bg);
+    color: var(--color-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover,
+  a:focus {
+    color: #1d4ed8;
+    outline: none;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    background: var(--color-bg);
+    box-shadow: 0 1px 4px var(--shadow-light);
+    z-index: 1000;
+  }
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem var(--spacing);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-primary);
+    user-select: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    font-weight: 600;
+  }
+  .nav-links a {
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    user-select: none;
+  }
+  .nav-links a:hover,
+  .nav-links a:focus {
+    background-color: var(--color-accent);
+    color: white;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 2.5rem auto 4rem;
+    padding: 0 var(--spacing);
+    flex: 1 0 auto;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 0 var(--spacing);
+  }
+  .hero h1 {
+    font-size: 3.125rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+    line-height: 1.1;
+  }
+  .hero p {
+    font-size: 1.25rem;
+    color: var(--color-secondary);
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* Videos container as horizontal scroll with 5 videos visible */
+  #videos {
+    display: flex;
+    gap: 1.75rem;
+    overflow-x: auto;
+    scroll-padding: var(--spacing);
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x mandatory;
+  }
+  #videos::-webkit-scrollbar {
+    height: 0.5rem;
+  }
+  #videos::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 0.5rem;
+  }
+  #videos::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 0.5rem;
+  }
+  #videos::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  .video-card {
+    flex: 0 0 calc((100% - 4 * 1.75rem) / 5);
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px var(--shadow-light);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+  }
+  .video-card:hover,
+  .video-card:focus-within {
+    box-shadow: 0 12px 24px var(--shadow-medium);
+    transform: translateY(-0.25rem);
+  }
+
+  .video-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    flex: 1 1 auto;
+  }
+  .video-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    transition: transform 0.3s ease;
+  }
+  .video-card:hover iframe,
+  .video-card:focus-within iframe {
+    transform: scale(1.02);
+  }
+
+  /* Responsive adjustments */
+
+  /* For tablet landscape and below - show 3 cards */
+  @media (max-width: 980px) {
+    .video-card {
+      flex: 0 0 calc((100% - 2 * 1.75rem) / 3);
+    }
+  }
+
+  /* For mobile - show 1 card fully visible with side partial cards */
+  @media (max-width: 600px) {
+    #videos {
+      padding-left: var(--spacing);
+      scroll-padding-left: var(--spacing);
+    }
+    .video-card {
+      flex: 0 0 80vw;
+      max-width: 80vw;
+      margin-right: 1rem;
+      scroll-snap-align: center;
+      border-radius: 1rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    }
+  }
+
+  footer {
+    text-align: center;
+    color: var(--color-secondary);
+    font-size: 0.9rem;
+    padding: 1rem 0 3rem;
+    user-select: none;
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 {
+      font-size: 2.25rem;
+    }
+    .hero p {
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+<header role="banner">
+  <nav>
+    <div class="logo" aria-label="Logo de RIU">RIU</div>
+    <div class="nav-links">
+      <a href="#videos" tabindex="0">Videos</a>
+      <a href="https://example.com/about" target="_blank" rel="noopener" tabindex="0"></a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" aria-label="Introducción de la página">
+    <h1>Videos de meditación para calmar tu mente</h1>
+    <p>Descubre una selección curada de videos tranquilos para ayudarte a relajarte, concentrarte y encontrar el equilibrio interior.</p>
+  </section>
+
+  <section id="videos" aria-label="Lista de videos de meditación" tabindex="0">
+    <!-- Los videos se insertan aquí desde JavaScript -->
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 RIU. Todos los derechos reservados.
+</footer>
+
+<script>
+  // 20 URLs de videos embebidos (YouTube)
+  const videoLinks = [
+    "https://www.youtube.com/embed/inpok4MKVLM",
+    "https://www.youtube.com/embed/MIr3RsUWrdo",
+    "https://www.youtube.com/embed/QP6urr9mW2w",
+    "https://www.youtube.com/embed/k4yXQ8F2Wj8",
+    "https://www.youtube.com/embed/4pLUleLdwY4",
+    "https://www.youtube.com/embed/4Ea1NdxpFZU",
+    "https://www.youtube.com/embed/oQ7NQz6C-TI",
+    "https://www.youtube.com/embed/6p_yaNFSYao",
+    "https://www.youtube.com/embed/ZToicYcHIOU",
+    "https://www.youtube.com/embed/f2pUQbtHqEU",
+    "https://www.youtube.com/embed/LRxHajpCOv0",
+    "https://www.youtube.com/embed/cfMeUe2uJp4",
+    "https://www.youtube.com/embed/S4wW0sRf-1o",
+    "https://www.youtube.com/embed/YfVlENt6kN0",
+    "https://www.youtube.com/embed/YF7gQvximO4",
+    "https://www.youtube.com/embed/fH8IQJo67RM",
+    "https://www.youtube.com/embed/r-gqLOoLY9Y",
+    "https://www.youtube.com/embed/8fJ7JjY2KPk",
+    "https://www.youtube.com/embed/Vmb1tqYqyII",
+    "https://www.youtube.com/embed/TPrnSACiTJ4"
+  ];
+
+  // Genera y añade las tarjetas de videos
+  function createVideoCard(url) {
+    const card = document.createElement('article');
+    card.className = 'video-card';
+    card.tabIndex = 0;
+    card.setAttribute('role', 'region');
+    card.setAttribute('aria-label', 'Reproductor de video de meditación');
+
+    const embedWrapper = document.createElement('div');
+    embedWrapper.className = 'video-embed';
+
+    const iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.title = "Reproductor de video de meditación";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+
+    embedWrapper.appendChild(iframe);
+    card.appendChild(embedWrapper);
+    return card;
+  }
+
+  function renderVideos() {
+    const container = document.getElementById('videos');
+    videoLinks.forEach((url) => {
+      container.appendChild(createVideoCard(url));
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', renderVideos);
+</script>
+</body>
+</html>
+
