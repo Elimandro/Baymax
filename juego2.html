@@ -184,12 +184,12 @@
   </audio>
 
   <!-- Unique sounds for each face -->
-  <audio id="sound1" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/21/audio_bf51e1536b.mp3?filename=meditation-bell-7427.mp3" aria-hidden="true"></audio>
-  <audio id="sound2" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/08/29/audio_6e5bdf7a48.mp3?filename=forest-birds-ambient-11404.mp3" aria-hidden="true"></audio>
-  <audio id="sound3" preload="auto" src="https://cdn.pixabay.com/download/audio/2021/09/16/audio_2e36f79d30.mp3?filename=water-ambient-7814.mp3" aria-hidden="true"></audio>
-  <audio id="sound4" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/26/audio_f47b98c8b3.mp3?filename=wind-sound-ambient-1196.mp3" aria-hidden="true"></audio>
-  <audio id="sound5" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/04/20/audio_c2df71a33b.mp3?filename=night-breeze-ambient-9356.mp3" aria-hidden="true"></audio>
-  <audio id="sound6" preload="auto" src="https://cdn.pixabay.com/download/audio/2021/11/01/audio_3f302f547e.mp3?filename=gentle-chime-13423.mp3" aria-hidden="true"></audio>
+  <audio id="sound1" preload="auto" src="sound1.mp3" aria-hidden="true"></audio>
+  <audio id="sound2" preload="auto" src="sound2.mp3" aria-hidden="true"></audio>
+  <audio id="sound3" preload="auto" src="sound3.mp3" aria-hidden="true"></audio>
+  <audio id="sound4" preload="auto" src="sound4.mp3" aria-hidden="true"></audio>
+  <audio id="sound5" preload="auto" src="sound5.mp3" aria-hidden="true"></audio>
+  <audio id="sound6" preload="auto" src="sound6.mp3" aria-hidden="true"></audio>
 
   <script>
     (function(){
@@ -316,7 +316,6 @@
         }
       }
 
-      // Click on face plays its sound and triggers cube tap animation + stops auto rotation
       cube.querySelectorAll('.face').forEach(face => {
         face.style.touchAction = 'manipulation';
         face.addEventListener('click', e => {
@@ -327,14 +326,14 @@
         });
       });
 
-      // Cube click to tap bounce + stops auto rotation (but no sound by default)
+     
       cube.addEventListener('click', e => {
         e.preventDefault();
         tapBounceAnimation();
         autoRotate = false;
       });
 
-      // Keyboard rotate controls
+      
       container.addEventListener('keydown', e => {
         const step = 15;
         let handled = false;
