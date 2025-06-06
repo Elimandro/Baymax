@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pop It ASMR Nuyoah - Elegant Bubble Popping Game</title>
+  <title>Pop It - reduce ansiedad</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -202,17 +202,16 @@
 <body>
   <div class="page-container" role="main">
     <header>
-      <h1>Pop It ASMR Nuyoah</h1>
+      <h1>Pop It</h1>
     </header>
 
     <main>
       <section class="game-card" role="grid" aria-label="Pop It ASMR Bubble Popping Game">
-        <!-- bubbles added by JS -->
       </section>
     </main>
 
     <footer>
-      Click the bubbles to pop them! Toggle on or off with satisfying ASMR sounds.
+      Haz click para obtener un sonido satisfactorio.
     </footer>
   </div>
 
