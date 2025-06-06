@@ -216,8 +216,8 @@
     </footer>
   </div>
 
-  <audio id="popSound" preload="auto" src="https://assets.codepen.io/3/poppy-pop.mp3"></audio>
-  <audio id="unpopSound" preload="auto" src="https://assets.codepen.io/3/poppy-unpop.mp3"></audio>
+  <audio id="popSound" preload="auto" src="pop-39222.mp3"></audio>
+  <audio id="unpopSound" preload="auto" src="pop-39222.mp3"></audio>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
