@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meditación contra la Ansiedad - Frecuencias Sanadoras</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* CSS Variables for watery theme */
+    :root {
+      --color-bg-light: #f0fbff;
+      --color-gradient-from: #caf0f8;
+      --color-gradient-via: #90e0ef;
+      --color-gradient-to: #00b4d8;
+
+      --color-accent: #0077b6;
+      --color-accent-hover: #0096c7;
+
+      --color-text-primary: #023e8a;
+      --color-text-secondary: #0077b6;
+      --color-text-muted: #4a6572;
+
+      --color-white: #ffffff;
+
+      --radius: 0.75rem;
+
+      --shadow-card: rgba(0, 75, 123, 0.15);
+      --shadow-header: rgba(0, 123, 255, 0.15);
+    }
+
+    /* Global Reset and Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--color-gradient-from), var(--color-gradient-via), var(--color-gradient-to));
+      color: var(--color-text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2rem 1rem 4rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: var(--color-white);
+      box-shadow: 0 2px 12px var(--shadow-header);
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header .logo {
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: var(--color-accent);
+      letter-spacing: 0.12em;
+      user-select: none;
+      cursor: default;
+    }
+
+    nav a {
+      color: var(--color-text-secondary);
+      font-weight: 600;
+      margin-left: 2rem;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.25s ease;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      color: var(--color-accent-hover);
+      outline: none;
+    }
+
+    main {
+      max-width: 900px;
+      width: 100%;
+      padding: 4rem 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 3.5rem;
+    }
+
+    .hero {
+      max-width: 720px;
+      background: var(--color-white);
+      padding: 3rem 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px var(--shadow-card);
+      user-select: none;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin: 0;
+      color: var(--color-text-primary);
+    }
+
+    .hero p {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    .frequencies {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+      width: 100%;
+      padding: 0 1rem;
+    }
+
+    .card {
+      background: var(--color-white);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 25px var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.25rem 1.75rem;
+      transition:
+        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      color: var(--color-text-primary);
+      border: 2px solid transparent;
+    }
+
+    .card:hover, .card:focus-within {
+      box-shadow: 0 15px 40px rgba(0, 123, 255, 0.3);
+      transform: scale(1.06);
+      border-color: var(--color-accent-hover);
+      outline: none;
+    }
+
+    .card h2 {
+      font-size: 2.25rem;
+      margin: 0 0 0.5rem 0;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      user-select: text;
+      color: var(--color-accent);
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      font-weight: 600;
+      user-select: none;
+    }
+
+    button.play-button {
+      margin-top: 1.5rem;
+      background: var(--color-accent);
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 8px 22px rgba(0, 119, 184, 0.6);
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      color: var(--color-white);
+    }
+
+    button.play-button:hover,
+    button.play-button:focus {
+      background: var(--color-accent-hover);
+      transform: scale(1.12);
+      outline: none;
+    }
+
+    button.play-button svg {
+      fill: var(--color-white);
+      width: 28px;
+      height: 28px;
+      pointer-events: none;
+    }
+
+    footer {
+      margin-top: 5rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      user-select: none;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1.5rem 1rem 3rem;
+      }
+      main {
+        padding: 3rem 1rem 1rem;
+      }
+      .card {
+        padding: 1.5rem 1rem;
+      }
+      .hero {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" tabindex="0" aria-label="Meditación contra la Ansiedad">
+      RIU
+    </div>
+    <nav role="navigation" aria-label="Primary navigation">
+      <a href="#frequencies" tabindex="0">Frecuencias</a>
+      <a href="#about" tabindex="0">Sobre</a>
+      <a href="#footer" tabindex="0">Contacto</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" role="banner" aria-labelledby="hero-title hero-desc">
+      <h1 id="hero-title">Meditación para Calmar la Ansiedad</h1>
+      <p id="hero-desc">
+        Experimenta la armonía interior con frecuencias curativas. <br />
+        Siente la paz y la tranquilidad mientras las vibraciones sanan tu mente.
+      </p>
+    </section>
+
+    <section id="frequencies" class="frequencies" aria-label="Frecuencias de meditación disponibles">
+      <article class="card" tabindex="0" role="region" aria-labelledby="freq1-title freq1-desc">
+        <h2 id="freq1-title">The Lost Soul Down</h2>
+        <p id="freq1-desc">Una melodía para la introspección y la calma.</p>
+        <button class="play-button" aria-label="Reproducir The Lost Soul Down">
+          <svg viewBox="0 0 24 24" aria-hidden="true" >
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <audio id="audio-lost-soul" preload="none" src="the_lost_soul_down.mp3"></audio>
+      </article>
+
+      <article class="card" tabindex="0" role="region" aria-labelledby="freq2-title freq2-desc">
+        <h2 id="freq2-title">Let Go (Slowed to Perfection)</h2>
+        <p id="freq2-desc">Deja ir y encuentra la paz interior.</p>
+        <button class="play-button" aria-label="Reproducir Let Go (Slowed to Perfection)">
+          <svg viewBox="0 0 24 24" aria-hidden="true" >
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <audio id="audio-let-go" preload="none" src="let_go_slowed_to_perfection.mp3"></audio>
+      </article>
+
+      <article class="card" tabindex="0" role="region" aria-labelledby="freq3-title freq3-desc">
+        <h2 id="freq3-title">The Lost</h2>
+        <p id="freq3-desc">Un viaje sonoro hacia la serenidad.</p>
+        <button class="play-button" aria-label="Reproducir The Lost">
+          <svg viewBox="0 0 24 24" aria-hidden="true" >
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <audio id="audio-the-lost" preload="none" src="the_lost.mp3"></audio>
+      </article>
+
+      <article class="card" tabindex="0" role="region" aria-labelledby="freq4-title freq4-desc">
+        <h2 id="freq4-title">Ruido Blanco</h2>
+        <p id="freq4-desc">Ideal para la concentración y el descanso.</p>
+        <button class="play-button" aria-label="Reproducir Ruido Blanco">
+          <svg viewBox="0 0 24 24" aria-hidden="true" >
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <audio id="audio-ruido-blanco" preload="none" src="ruido_blanco.mp3"></audio>
+      </article>
+
+      <article class="card" tabindex="0" role="region" aria-labelledby="freq5-title freq5-desc">
+        <h2 id="freq5-title">Ruido Oscuro</h2>
+        <p id="freq5-desc">Sumérgete en la tranquilidad de la oscuridad.</p>
+        <button class="play-button" aria-label="Reproducir Ruido Oscuro">
+          <svg viewBox="0 0 24 24" aria-hidden="true" >
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        <audio id="audio-ruido-oscuro" preload="none" src="ruido_oscuro.mp3"></audio>
+      </article>
+    </section>
+
+    <section id="about" role="region" aria-labelledby="about-title" style="max-width:700px; margin-top:4rem; text-align:center;">
+      <h3 id="about-title" style="color: var(--color-accent); font-weight:700; font-size:1.5rem; margin-bottom:0.5rem;">Sobre RIU</h3>
+      <p style="color: var(--color-text-muted); font-size: 1rem; line-height:1.5;">
+        RIU te ofrece una experiencia meditativa única usando frecuencias curativas reconocidas para calmar el estrés y la ansiedad. <br />
+        Cada frecuencia ha sido seleccionada para ayudarte a alcanzar un estado de relajación profunda y bienestar espiritual.
+      </p>
+    </section>
+  </main>
+
+  <footer id="footer" role="contentinfo">
+    <p>© 2025 RIU. Meditación y bienestar para tu mente.</p>
+  </footer>
+
+  <script>
+    // Handle audio play/pause toggling so only one audio plays at a time
+    const buttons = document.querySelectorAll(".play-button");
+    let currentAudio = null;
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const card = btn.closest(".card");
+        const audio = card.querySelector("audio");
+
+        if (currentAudio && currentAudio !== audio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          // reset previous button state
+          buttons.forEach(b => b.setAttribute("aria-pressed", "false"));
+        }
+
+        if (audio.paused) {
+          audio.play();
+          currentAudio = audio;
+          btn.setAttribute("aria-pressed", "true");
+        } else {
+          audio.pause();
+          audio.currentTime = 0;
+          btn.setAttribute("aria-pressed", "false");
+          currentAudio = null;
+        }
+      });
+
+      // set initial aria-pressed state for accessibility
+      btn.setAttribute("aria-pressed", "false");
+    });
+  </script>
+</body>
+</html>
