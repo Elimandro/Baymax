@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test de Ansiedad - Calma Mente</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #d0f0e0, #a0d9c7);
+      color: #2c3e50;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #2c7a7b;
+    }
+
+    header p {
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+
+    nav {
+      background-color: #ffffffcc;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 10px 20px;
+    }
+
+    .menu {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+
+    .menu li {
+      margin: 0 10px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #2c7a7b;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .menu a:hover {
+      color: #38b2ac;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .question {
+      margin: 20px 0;
+    }
+
+    .question p {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    label:hover {
+      transform: scale(1.02);
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    button {
+      display: block;
+      margin: 30px auto 10px;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #38b2ac;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #2c7a7b;
+    }
+
+    #resultado {
+      text-align: center;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 25px;
+      color: #2c3e50;
+      padding: 15px;
+    }
+
+    #barraCarga {
+      position: relative;
+      height: 30px;
+      width: 250px;
+      background: #eee;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    #barraProgreso {
+      height: 100%;
+      width: 0%;
+      background: green;
+      border-radius: 15px 0 0 15px;
+      transition: width 0.5s, background-color 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Evaluación Psicométrica Inicial</h1>
+    <p>Este test no reemplaza un diagnóstico clínico. Su propósito es orientativo.</p>
+  </header>
+
+  <div class="container">
+    <h1>Test de Ansiedad</h1>
+    <form id="testForm"></form>
+    <button type="button" onclick="calcularResultado()">Ver Resultado</button>
+    <div id="resultado"></div>
+    <div id="barraCarga">
+      <div id="barraProgreso"></div>
+    </div>
+  </div>
+
+  <script>
+    const preguntas = [
+      "¿Con qué frecuencia te sientes nervioso?",
+      "¿Con qué frecuencia te sientes irritable?",
+      "¿Con qué frecuencia sientes miedo sin motivo claro (a enfermar, perder el control, etc.)?",
+      "¿Has tenido problemas para dormir o descansar bien?",
+      "¿Te cuesta mantener la atención o concentrarte en tus actividades?",
+      "¿Tienes tensión muscular, dolores o rigidez sin causa física?",
+      "¿Sientes hormigueos o sensibilidad aumentada?",
+      "¿Tu corazón se acelera, sientes palpitaciones o presión en el pecho?",
+      "¿Sientes dificultad para respirar o sensación de ahogo?",
+      "¿Sientes molestias estomacales o náuseas ante una situación de estrés?",
+      "¿Has notado cambios en el deseo sexual?",
+      "¿Sientes inquietud corporal o haces movimientos constantes (manos, pies, etc.)?"
+    ];
+
+    const opciones = ["Nunca", "Rara vez", "A veces", "Frecuentemente", "Siempre"];
+    const form = document.getElementById("testForm");
+
+    preguntas.forEach((texto, i) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      const p = document.createElement("p");
+      p.textContent = `${i + 1}. ${texto}`;
+      div.appendChild(p);
+
+      opciones.forEach((op, j) => {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = `q${i}`;
+        input.value = j;
+        input.required = true;
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(` ${j} - ${op}`));
+        div.appendChild(label);
+      });
+
+      form.appendChild(div);
+    });
+
+    function calcularResultado() {
+      const respuestas = document.querySelectorAll("form input[type=radio]:checked");
+      if (respuestas.length < preguntas.length) {
+        alert("Por favor, responde todas las preguntas.");
+        return;
+      }
+
+      let total = 0;
+      respuestas.forEach(r => total += parseInt(r.value));
+
+      let interpretacion = "";
+      let rol = "";
+      if (total <= 17) {
+        interpretacion = "Ansiedad leve o dentro de lo normal.";
+        rol = "consejero";  // Rol menos intensivo
+      } else if (total <= 24) {
+        interpretacion = "Ansiedad leve a moderada.";
+        rol = "psicologo";  // Rol intermedio
+      } else if (total <= 30) {
+        interpretacion = "Ansiedad moderada a severa.";
+        rol = "psiquiatra";  // Rol más intensivo
+      } else {
+        interpretacion = "Ansiedad severa. Considera hablar con un profesional.";
+        rol = "psiquiatra";  // Rol más intensivo
+      }
+
+      document.getElementById("resultado").textContent = `Resultado: ${total} puntos. ${interpretacion}`;
+
+      // Actualizar barra de carga
+      const porcentaje = (total / 48) * 100;
+      const barra = document.getElementById("barraProgreso");
+      barra.style.width = porcentaje + "%";
+
+      // Enviar rol al backend
+      enviarRolAlBackend(rol);
+    }
+
+    function enviarRolAlBackend(rol) {
+      fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt: "Consulta del paciente", rol: rol })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Manejar la respuesta del backend
+        console.log(data.respuesta);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>
