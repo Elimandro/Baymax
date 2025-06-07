@@ -17,7 +17,7 @@ MEDICAL_KEYWORDS = [
     "recurrir", "recurro", "mente", "caos", "joven", "jovenes", "nosotros",
     "amistades", "familia", "amigos", "novio", "novia", "conflicto", "conflictos",
     "esposo", "esposa", "hijo", "hija", "familiares", "test", "carrera", "estudiante",
-    "actividad", "mejorar" "trastorno" , "facultad" , "enfrentar" ,
+    "actividad", "mejorar", "trastorno", "facultad", "enfrentar",
 ]
 
 def is_medical_question(prompt):
@@ -43,7 +43,7 @@ def chat():
 def chat_api():
     data = request.json
     prompt = data.get('prompt')
-    role = session.get('role')
+    role = data.get('rol')  # Obtener el rol del cuerpo de la solicitud
 
     if not prompt:
         return jsonify({'respuesta': 'El prompt no puede estar vacío.'})
@@ -56,7 +56,9 @@ def chat_api():
             "Eres un asistente especializado en bienestar psicosocial juvenil. "
             "Tu tarea es responder con precisión, brevedad y empatía preguntas relacionadas con psicología, "
             "centrándote en el manejo de síntomas y signos de ansiedad y depresión. "
+            "Evita explicaciones excesivamente técnicas o extensas. "
             "Utiliza información basada en fuentes confiables y académicas para apoyar tus respuestas. "
+            "La información debe ser de Google Académico o SciELO. "
             f"La pregunta del joven paciente es: {prompt}"
         )
     elif role == 'psiquiatra':
@@ -64,13 +66,15 @@ def chat_api():
             "Eres un asistente experto en salud psiquiátrica y neurológica enfocado en jóvenes. "
             "Ofrece respuestas claras, concisas y basadas en evidencia sobre temas relacionados con TDA y TDAH, "
             "evitando explicaciones excesivamente técnicas o extensas. "
+            "La información debe ser de Google Académico o SciELO. "
             f"Consulta los síntomas descritos por el paciente y proporciona orientación adecuada: {prompt}"
         )
     else:
         context = (
-            "Eres un consejero en bienestar social para jóvenes que enfrentan problemas personales que pueden "
-            "generar ansiedad. Ofrece consejos prácticos, alentadores y respetuosos para mejorar su bienestar emocional, "
+            "Eres un consejero en bienestar social para jóvenes que enfrentan problemas personales o de estudio en su escuela, universidad, "
+            "centro educativo que pueden generar ansiedad. Ofrece consejos prácticos, alentadores y respetuosos para mejorar su bienestar emocional, "
             "centrándote en el apoyo y orientación sin abordar temas médicos o diagnósticos. "
+            "La información debe ser de Google Académico o SciELO. "
             f"El paciente describe sus desafíos como: {prompt}"
         )
 
@@ -93,4 +97,3 @@ def chat_api():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
