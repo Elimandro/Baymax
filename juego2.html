@@ -8,14 +8,14 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
     :root {
-      --bg-color: #ffffff;
-      --text-color: #374151;
-      --subtitle-color: #6b7280;
-      --primary-color: #2563eb;
-      --shadow-color: rgba(0, 0, 0, 0.08);
+      --bg-color: #e0f7fa;
+      --text-color: #004d40;
+      --subtitle-color: #00796b;
+      --primary-color: #00796b;
+      --shadow-color: rgba(0, 0, 0, 0.2);
       --cube-size: 150px;
-      --cube-face-color: #f9fafb;
-      --animation-duration: 0.3s;
+      --cube-face-color: #ffffff;
+      --animation-duration: 0.5s;
     }
 
     /* Reset and base */
@@ -42,6 +42,7 @@
       font-size: 3.5rem;
       margin-bottom: 0.25rem;
       text-align: center;
+      color: var(--primary-color);
     }
 
     p.subtitle {
@@ -72,7 +73,6 @@
       border-radius: 1rem;
       box-shadow: 0 6px 20px var(--shadow-color);
       background-color: var(--cube-face-color);
-      user-select: none;
     }
     #cube:active {
       cursor: grabbing;
@@ -91,12 +91,13 @@
       font-size: 5rem; /* Tamaño de icono ajustado */
       color: var(--primary-color);
       user-select: none;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.2s ease, transform 0.2s ease;
       touch-action: manipulation;
     }
 
     .face:hover {
-      background-color: #e0e7ff;
+      background-color: #b2dfdb;
+      transform: scale(1.05);
     }
 
     /* Position the 6 faces */
@@ -127,7 +128,7 @@
       color: white;
       font-weight: 700;
       font-size: 1.125rem;
-      box-shadow: 0 6px 12px rgba(37, 99, 235, 0.6);
+      box-shadow: 0 6px 12px rgba(0, 121, 107, 0.6);
       cursor: pointer;
       transition:
         background-color 0.25s ease,
@@ -136,12 +137,12 @@
     }
     #sound-toggle:hover,
     #sound-toggle:focus {
-      background-color: #1e40af;
+      background-color: #004d40;
       outline: none;
       transform: scale(1.05);
     }
     #sound-toggle:focus-visible {
-      outline: 3px solid #bfdbfe;
+      outline: 3px solid #b2dfdb;
       outline-offset: 3px;
     }
 
@@ -200,11 +201,9 @@
 
       ambientSound.volume = 0.2;
 
-      // Attempt to autoplay ambient sound
+      // Intentar reproducir sonido ambiental
       function tryPlayAmbient(){
-        ambientSound.play().catch(() => {
-          // Autoplay prevented, wait for toggle or interaction
-        });
+        ambientSound.play().catch(() => {});
       }
       tryPlayAmbient();
 
@@ -216,7 +215,7 @@
           isSoundOn = false;
           soundToggle.textContent = '🔇 Sonido NO';
           soundToggle.setAttribute('aria-pressed','false');
-        }else{
+        } else {
           ambientSound.play();
           isSoundOn = true;
           soundToggle.textContent = '🔈 Sonido SI';
@@ -224,7 +223,7 @@
         }
       });
 
-      // Rotation state
+      // Variables para la rotación
       let rotationX = -15;
       let rotationY = 30;
       let isDragging = false;
@@ -247,8 +246,8 @@
         lastTimestamp = timestamp;
 
         if(autoRotate && !isDragging){
-          rotationY += autoRotateSpeedY * (delta/16);
-          rotationX += autoRotateSpeedX * (delta/16);
+          rotationY += autoRotateSpeedY * (delta / 16);
+          rotationX += autoRotateSpeedX * (delta / 16);
           rotationX = Math.min(90, Math.max(-90, rotationX));
           updateCube();
         }
@@ -272,7 +271,7 @@
       }
 
       function pointerMoveHandler(e){
-        if(!isDragging)return;
+        if(!isDragging) return;
         e.preventDefault();
         const currentX = e.clientX || (e.touches && e.touches[0].clientX);
         const currentY = e.clientY || (e.touches && e.touches[0].clientY);
@@ -285,7 +284,7 @@
       }
 
       function pointerUpHandler(e){
-        if(!isDragging)return;
+        if(!isDragging) return;
         e.preventDefault();
         isDragging = false;
         cube.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
@@ -311,29 +310,48 @@
         if(!isSoundOn) return;
         const audio = document.getElementById(soundId);
         if(audio){
+          // Detener todos los sonidos antes de reproducir uno nuevo
+          const allSounds = document.querySelectorAll('audio[id^="sound"]');
+          allSounds.forEach(sound => {
+            sound.pause();
+            sound.currentTime = 0; // Reiniciar el tiempo
+          });
+          
           audio.currentTime = 0;
           audio.play().catch(() => {});
         }
       }
 
       cube.querySelectorAll('.face').forEach(face => {
-        face.style.touchAction = 'manipulation';
         face.addEventListener('click', e => {
-          e.stopPropagation(); // prevent cube click
+          e.stopPropagation(); // prevenir clic en el cubo
           tapBounceAnimation();
           playFaceSound(face.dataset.sound);
           autoRotate = false;
+
+          // Obtener el icono de la cara
+          const icon = face.innerHTML; 
+          
+          // Girar el cubo para mostrar la cara seleccionada
+          const faceIndex = Array.from(cube.children).indexOf(face);
+          const rotationMap = [0, 90, 180, -90, 0, 0]; // Mapa de rotación para cada cara
+          rotationY = rotationMap[faceIndex]; // Ajustar la rotación en Y según la cara seleccionada
+          updateCube(); // Actualizar la rotación
+
+          // Volver a la rotación automática después de un breve retraso
+          setTimeout(() => {
+            autoRotate = true; // Reiniciar la rotación automática
+            updateCube(); // Actualizar la rotación
+          }, 2000); // Esperar 2 segundos antes de volver a la rotación automática
         });
       });
 
-     
       cube.addEventListener('click', e => {
         e.preventDefault();
         tapBounceAnimation();
         autoRotate = false;
       });
 
-      
       container.addEventListener('keydown', e => {
         const step = 15;
         let handled = false;
